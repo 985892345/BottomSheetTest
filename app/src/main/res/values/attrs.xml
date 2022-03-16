@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyBottomSheetBehavior_layout">
+        <attr name="bottomSheet_peekHeight" format="dimension"/>
+        <attr name="bottomSheet_expandedOffset" format="dimension"/>
+    </declare-styleable>
+</resources>
