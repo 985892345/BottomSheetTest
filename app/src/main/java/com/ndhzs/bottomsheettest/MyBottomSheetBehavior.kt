@@ -3,7 +3,6 @@ package com.ndhzs.bottomsheettest
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -12,10 +11,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.addListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginTop
-import androidx.recyclerview.widget.RecyclerView
 import java.lang.ref.WeakReference
 import kotlin.math.abs
-import kotlin.math.min
 import kotlin.math.pow
 
 /**

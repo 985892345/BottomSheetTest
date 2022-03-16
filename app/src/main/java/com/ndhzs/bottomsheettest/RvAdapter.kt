@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -15,6 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 class RvAdapter : RecyclerView.Adapter<RvAdapter.ViewH>() {
     class ViewH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tv = itemView.findViewById<TextView>(R.id.item_tv)
+        val cv = itemView.findViewById<CardView>(R.id.item_cv)
+        init {
+            cv.setOnClickListener {
+                Toast.makeText(it.context, tv.text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewH {
