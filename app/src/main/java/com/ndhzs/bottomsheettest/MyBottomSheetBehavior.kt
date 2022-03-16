@@ -39,7 +39,6 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
         setExpandedOffset(
             ty.getDimensionPixelSize(
                 R.styleable.MyBottomSheetBehavior_layout_bottomSheet_expandedOffset,
-
                 0
             )
         )
@@ -100,6 +99,9 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
                 mIsTouchInChild = !(x !in childLeft..childRight || y !in childTop..childBottom)
             }
             MotionEvent.ACTION_MOVE -> {
+                mIsExistTouchMove = true // 开始
+                if (!mIsTouchInChild) return false
+
                 mDiffMoveX = mLastMoveX - x
                 mDiffMoveY = mLastMoveY - y
 
@@ -112,8 +114,7 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
                 mLastMoveX = x
                 mLastMoveY = y
 
-                // 这里只拦截没有开启嵌套滑动的区域
-                if (!mIsInNested && mIsTouchInChild) {
+                if (!mIsInNested) {
                     if (abs(x - mInitialX) > mTouchSlop
                         || abs(y - mInitialY) > mTouchSlop
                     ) {
@@ -135,8 +136,6 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
         val y = ev.y.toInt()
         when (ev.action) {
             MotionEvent.ACTION_MOVE -> {
-                mIsExistTouchMove = true // 开始
-
                 if (!mIsTouchInChild) return false
 
                 mDiffMoveX = mLastMoveX - x
@@ -368,8 +367,6 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
         val minY = getMinY(child)
         val maxY = getMaxY(child)
 
-        val halfY = (minY + maxY) / 2
-
         // 判断为可以展开或者折叠的最小速度
         val minFlingVelocity = ViewConfiguration.get(mContext).scaledMaximumFlingVelocity * 0.2F
 
@@ -379,6 +376,7 @@ class MyBottomSheetBehavior<V : View> : CoordinatorLayout.Behavior<V> {
             slowlyAnimate(oldY, minY) { setCurrY(child, it) }
         } else {
             if (oldY == minY || oldY == maxY) return
+            val halfY = (minY + maxY) / 2
             if (oldY < halfY) {
                 slowlyAnimate(oldY, minY) { setCurrY(child, it) }
             } else {
